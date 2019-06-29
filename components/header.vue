@@ -49,10 +49,14 @@
 </template>
 <script>
 export default {
-    methods: {
-        // 用户退出
-        handleLogout(){},
+    mounted(){
+        console.log(this.$store)
+        console.log(this.$store.state.user.userInfo.token)
     }
+    // methods: {
+    //     // 用户退出
+    //     handleLogout(){},
+    // }
 }
 </script>
 <style scoped lang="less">
