@@ -33,8 +33,9 @@
                     v-for="(item,index) in data.options.flightTimes"
                     :key="index"
                     :label="`${item.from}:00 - ${item.to}:00`"
-                    :value="`${item.from}:00 - ${item.to}:00`"
+                    :value="item"
                     >
+                    <!-- :value="item"  可筛选时间段，但是不论选择哪一时间段，都显示最后的时间段 -->
                     </el-option>
                 </el-select>
             </el-col>
