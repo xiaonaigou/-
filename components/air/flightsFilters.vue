@@ -33,7 +33,8 @@
                     v-for="(item,index) in data.options.flightTimes"
                     :key="index"
                     :label="`${item.from}:00 - ${item.to}:00`"
-                    :value="item"
+                    :value="`${item.from}:00 - ${item.to}:00`"
+                    :ref="item"
                     >
                     <!-- :value="item"  可筛选时间段，但是不论选择哪一时间段，都显示最后的时间段 -->
                     </el-option>
@@ -116,11 +117,14 @@ export default {
       },
 
       // 选择出发时间时触发
-      handleFlightTimes(value){
+      handleFlightTimes(ref){
         //console.log(this.data.flights)
+        const fromNum = +ref.split(" - ")[0].split(":")[0]
+        const toNum = +ref.split(" - ")[1].split(":")[0]
         const arr = this.data.flights
         .filter(v => {
-          return value.from <= +v.dep_time.split(":")[0] && value.to >= +v.dep_time.split(":")[0]
+          return fromNum <= (+v.dep_time.split(":")[0]) && 
+                toNum >= +v.dep_time.split(":")[0]
         });
 
         this.$emit("setDataList", arr);
