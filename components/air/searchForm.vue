@@ -84,8 +84,8 @@ export default {
               confirmButtonText: '确定',
               showCancelButton: false,
               type: 'warning'
-        })
-    }
+                })
+            }
         },
         
         // 出发城市输入框获得焦点时触发
