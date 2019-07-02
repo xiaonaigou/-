@@ -25,7 +25,7 @@
 
             <el-form-item class="form-item" prop="nickname">
                 <el-input 
-                placeholder="名字"
+                placeholder="账号昵称"
                 v-model="form.nickname">
                 </el-input>
             </el-form-item>
