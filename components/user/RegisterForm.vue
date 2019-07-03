@@ -4,6 +4,7 @@
         ref="form" 
         :rules="rules" 
         class="form">
+
             <el-form-item class="form-item" prop="username">
                 <el-input 
                 placeholder="用户名手机"
@@ -15,6 +16,7 @@
                 <el-input 
                 placeholder="验证码" 
                 v-model="form.captcha">
+                    <!-- 自定义模板 -->
                     <template slot="append">
                         <el-button @click="handleSendCaptcha">
                             发送验证码
@@ -151,14 +153,20 @@ export default {
             this.$refs['form'].validate((valid) => {
             if (valid) {
                 // 注册提交
-                const {checkPassword, ...props} = this.regForm;
+                const {checkPassword, ...props} = this.form;
 
                 this.$axios({
                     url: `/accounts/register`,
                     method: "POST",
                     data: props
                 }).then(res => {
-                    console.log(res.data);
+                    // 把用户的数据设置给store
+                    this.$store.commit("user/setUserInfo", res.data);
+
+                    this.$message.success("注册成功，正在登录...");
+                    setTimeout(() => {
+                        this.$router.push("/");
+                    }, 1000);
                 })
             } 
             });

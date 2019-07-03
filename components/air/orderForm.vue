@@ -106,9 +106,35 @@ export default {
             contactName: "", // 联系人名字
             contactPhone: "", // 联系人电话
             captcha: "", // 验证码
-            invoice: false   // 发票
+            invoice: false,   // 发票
+
         }
     },
+    
+    computed: {
+        // 计算总价格
+        allPrice(){
+            // console.log(123)
+            let price = 0;
+            
+            // 机票单价
+            price += this.data.seat_infos.org_settle_price;
+
+            // 添加燃油费
+            price += this.data.airport_tax_audlet;
+
+            // 保险
+            price += this.insurances.length * 30;
+
+            price *= this.users.length;
+            
+            // 触发设置总金额事件
+            this.$emit("setAllPrice", price)
+
+            return price;
+        }
+    },
+
     methods: {
         // 添加乘机人
         handleAddUsers(){
@@ -199,13 +225,16 @@ export default {
                 method: "POST",
                 data: orderData,
                 headers: {
+                    // 访问需要登录授权,需要添加头信息Authorization
                     Authorization: `Bearer ${userInfo.token || 'NO TOKEN'}`
                 }
             }).then(res => {
+                const {data: {id}} = res.data;
 
                 // 跳转到付款页
                 this.$router.push({
-                    path: "/air/pay"
+                    path: "/air/pay",
+                    query: { id }
                 });
             }).catch(err => {
                 const {message} = err.response.data;
@@ -216,27 +245,6 @@ export default {
                     type: 'warning'
                 })
             })
-        }
-    },
-    computed: {
-        // 计算总价格
-        allPrice(){
-            console.log(123)
-            let price = 0;
-            let len = this.users.length;
-
-            price += this.data.seat_infos.org_settle_price * len;
-
-            this.insurances.forEach(v => {
-                price += this.data.insurances[v - 1].price * len;
-            });
-
-            price += this.data.airport_tax_audlet * len;
-            
-            // 触发设置总金额事件
-            this.$emit("setAllPrice", price)
-
-            return price;
         }
     }
 }
