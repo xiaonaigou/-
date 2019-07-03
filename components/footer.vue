@@ -78,14 +78,15 @@ export default {
     }
 
     .scan{
-        text-align: center;
-
-        img{
-            width:140px;
-            height:140px;;
-        }
-
         font-size:12px;
+        text-align: center;
+        img{
+            width:100px;
+            height:100px;
+            border:3px solid #fff;
+            margin-top:12px;
+            margin-bottom:5px;
+        }
     }
 
     .licence{

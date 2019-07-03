@@ -37,7 +37,7 @@ export default {
   mounted(){
   // 这个处理方法是有缺陷的，不100%准确
   // userInfo在页面加载完才赋值
-    setTimeout(v => {
+    setTimeout(() => {
       const {id} = this.$route.query;   
       const {user: {userInfo}} = this.$store.state;
 
@@ -49,8 +49,9 @@ export default {
             Authorization: `Bearer ${userInfo.token}`
           }
       }).then(res => {
+          console.log(res.data)
         const {payInfo, price} = res.data;
-        console.log(price);
+        // console.log(price);
         this.payAllPrice = price
 
         // 生成二维码到canvas

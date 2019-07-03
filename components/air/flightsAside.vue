@@ -37,6 +37,12 @@
                   <span>选择</span>
               </el-row>
             </nuxt-link>
+            <el-button 
+            size="small" 
+            style="margin-top:10px"
+            @click="handleCleanAll">
+                清空历史查询
+            </el-button>
         </div>
     </div>
 </template>
@@ -50,8 +56,15 @@ export default {
   },
 
   mounted(){
-      // 获取历史记录
-      this.airsLog = JSON.parse(localStorage.getItem("airs") || `[]`);
+    // 获取历史记录
+    this.airsLog = JSON.parse(localStorage.getItem("airs") || `[]`);
+  },
+
+  methods:{
+    handleCleanAll(){
+        localStorage.removeItem("airs");
+        this.airsLog = JSON.parse(localStorage.getItem("airs") || `[]`);
+    }
   }
 }
 </script>
